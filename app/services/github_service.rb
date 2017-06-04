@@ -14,14 +14,14 @@ class GithubService
   end
 
   def get_username
-    user_response = Faraday.get "https://api.github.com/user",{},{'Accept'=>'application/json', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>"token #{self.access_token}", 'User-Agent'=>'Faraday v0.9.1'}
+    user_response = Faraday.get "https://api.github.com/user",{},{'Authorization' => "token #{self.access_token}", 'Accept' => 'application/json'}
 
     user_json = JSON.parse(user_response.body)
     user_json["login"]
   end
 
   def get_repos
-    response = Faraday.get "https://api.github.com/user/repos", {}, {'Accept'=>'application/json', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>"token #{self.access_token}", 'User-Agent'=>'Faraday v0.9.1'}
+    response = Faraday.get "https://api.github.com/user/repos", {}, {'Authorization' => "token #{self.access_token}", 'Accept' => 'application/json'}
 
     repos_array = JSON.parse(response.body)
     repos_array.map{|repo| GithubRepo.new(repo) }
