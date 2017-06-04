@@ -1,6 +1,5 @@
 class RepositoriesController < ApplicationController
   def index
-    binding.pry
     github = GithubService.new
     @repos_array = github.get_repos
     redirect_to '/'
